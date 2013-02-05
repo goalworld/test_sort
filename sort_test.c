@@ -84,7 +84,7 @@ randFill(int arr[],int len)
 	assert(len>=1);
 	int i=0;
 	for(i;i<len;i++){
-		arr[i]= rand()%10;
+		arr[i]= rand()%len;
 	}
 }
 
@@ -96,17 +96,18 @@ _quickSort(int arr[],int p,int q)
 	}
 	int x = arr[q];
 	int i = p-1,j=p;
-	for(;j<=q;j++){
+	for(;j<q;j++){
 		if(arr[j]<x){
 			i++;
 			SWAP(&arr[j],&arr[i]);
 		}
 	}
+	SWAP(&arr[i+1],&arr[q]);
 	_quickSort(arr,p,i);
 	_quickSort(arr,i+2,q);
 }
 static void quickSort(int arr[],int len){
-	_quickSort(arr,0,len);
+	_quickSort(arr,0,len-1);
 }
 static clock_t 
 sortTime(int arr[],int len,void(*sortfn)(int arr[],int len))
@@ -125,15 +126,15 @@ main(int argc,char*argv[])
 		abort();
 	}
 	int len = atoi(argv[1]);
-	int arr[len];
-	int arr1[len];
-	int arr2[len];
-	int arr3[len];
+	int *arr   = malloc(sizeof(int)*len);
+	int *arr1 = malloc(sizeof(int)*len);
+	int *arr2 = malloc(sizeof(int)*len);;
+	int *arr3 = malloc(sizeof(int)*len);
 	srand(clock());
 	randFill(arr,len);
-	memcpy(arr1,arr,sizeof(arr));
-	memcpy(arr2,arr,sizeof(arr));
-	memcpy(arr3,arr,sizeof(arr));
+	memcpy(arr1,arr,(sizeof(int)*len));
+	memcpy(arr2,arr,(sizeof(int)*len));
+	memcpy(arr3,arr,(sizeof(int)*len));
 	printf("[insertSort]-> %d ms\n",  sortTime(arr,len,insertSort));
 	printf("[bumpSort  ]-> %d ms\n",  sortTime(arr1,len,bumpSort) );
 	printf("[heapSort  ]-> %d ms\n",  sortTime(arr2,len,heapSort));
