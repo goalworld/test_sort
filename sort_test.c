@@ -87,6 +87,27 @@ randFill(int arr[],int len)
 		arr[i]= rand()%10;
 	}
 }
+
+void 
+_quickSort(int arr[],int p,int q)
+{
+	if(p>=q){
+		return;
+	}
+	int x = arr[q];
+	int i = p-1,j=p;
+	for(;j<=q;j++){
+		if(arr[j]<x){
+			i++;
+			SWAP(&arr[j],&arr[i]);
+		}
+	}
+	_quickSort(arr,p,i);
+	_quickSort(arr,i+2,q);
+}
+static void quickSort(int arr[],int len){
+	_quickSort(arr,0,len);
+}
 static clock_t 
 sortTime(int arr[],int len,void(*sortfn)(int arr[],int len))
 {
@@ -107,12 +128,17 @@ main(int argc,char*argv[])
 	int arr[len];
 	int arr1[len];
 	int arr2[len];
+	int arr3[len];
 	srand(clock());
 	randFill(arr,len);
 	memcpy(arr1,arr,sizeof(arr));
 	memcpy(arr2,arr,sizeof(arr));
+	memcpy(arr3,arr,sizeof(arr));
 	printf("[insertSort]-> %d ms\n",  sortTime(arr,len,insertSort));
 	printf("[bumpSort  ]-> %d ms\n",  sortTime(arr1,len,bumpSort) );
 	printf("[heapSort  ]-> %d ms\n",  sortTime(arr2,len,heapSort));
+	printf("[quickSort ]-> %d ms\n",  sortTime(arr3,len,quickSort));
 	return 0;
 }
+
+
