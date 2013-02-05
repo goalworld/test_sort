@@ -97,7 +97,8 @@ sortTime(int arr[],int len,void(*sortfn)(int arr[],int len))
 	printArr(arr,len);
 	return end-pre;
 }
-int main(int argc,char*argv[])
+int 
+main(int argc,char*argv[])
 {
 	if(argc !=2 ){
 		abort();
